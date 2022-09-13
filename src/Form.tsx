@@ -5,20 +5,20 @@ import "./style.css";
 
 const Form = () => {
   const schema = yup.object().shape({
-    firstName: yup.string().min(3).max(32).required(),
-    email: yup.string().email().required(),
-    age: yup.number().positive().integer().min(18).required(),
-    password: yup.string().min(4).max(24).required(),
+    firstName: yup.string().min(3).max(32).required("Name is required!"),
+    email: yup.string().email().required("Email is required!"),
+    age: yup.number().positive().integer().min(18).required("Age is required!"),
+    password: yup.string().min(4).max(24).required("Password is required!"),
     confirmPassword: yup
       .string()
-      .oneOf([yup.ref("password"), null])
+      .oneOf([yup.ref("password"), null], "Passwords don't match!")
       .required(),
   });
 
   const {
     register,
     handleSubmit,
-    // formState: { errors },
+    formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -27,22 +27,43 @@ const Form = () => {
     console.log(data);
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="form-container">
-      <input type="text" placeholder="Name" {...register("firstName")} />
-      <input type="text" placeholder="Email" {...register("email")} />
-      <input type="number" placeholder="Age" {...register("age")} />
-      <input type="password" placeholder="Password" {...register("password")} />
-      <input
-        type="password"
-        placeholder="Confirm password"
-        {...register("confirmPassword")}
-      />
-      <textarea
-        placeholder="Description (optional)"
-        {...register("description")}
-      />
-      <input type="submit" />
-    </form>
+    <>
+      <form onSubmit={handleSubmit(onSubmit)} className="form-container">
+        <input type="text" placeholder="Name" {...register("firstName")} />
+        <p className="errors">
+          <> {errors.firstName?.message} </>
+        </p>
+        <input type="text" placeholder="Email" {...register("email")} />
+        <p className="errors">
+          <> {errors.email?.message} </>
+        </p>
+        <input type="number" placeholder="Age" {...register("age")} />
+        <p className="errors">
+          <> {errors.age?.message} </>
+        </p>
+        <input
+          type="password"
+          placeholder="Password"
+          {...register("password")}
+        />
+        <p className="errors">
+          <> {errors.password?.message} </>
+        </p>
+        <input
+          type="password"
+          placeholder="Confirm password"
+          {...register("confirmPassword")}
+        />
+        <p className="errors">
+          <> {errors.confirmPassword?.message} </>
+        </p>
+        <textarea
+          placeholder="Description (optional)"
+          {...register("description")}
+        />
+        <input type="submit" />
+      </form>
+    </>
   );
 };
 

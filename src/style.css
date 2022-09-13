@@ -25,3 +25,7 @@
   width: 55%;
   height: 80px;
 }
+.errors {
+  color: red;
+  padding: 0;
+}
