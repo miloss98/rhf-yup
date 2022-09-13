@@ -7,12 +7,18 @@ const Form = () => {
   const schema = yup.object().shape({
     firstName: yup.string().min(3).max(32).required("Name is required!"),
     email: yup.string().email().required("Email is required!"),
-    age: yup.number().positive().integer().min(18).required("Age is required!"),
+    age: yup
+      .number()
+      .typeError("Age field must be a number!")
+      .positive()
+      .integer()
+      .min(18)
+      .required("Age is required!"),
     password: yup.string().min(4).max(24).required("Password is required!"),
     confirmPassword: yup
       .string()
       .oneOf([yup.ref("password"), null], "Passwords don't match!")
-      .required(),
+      .required("This field is required!"),
   });
 
   const {
