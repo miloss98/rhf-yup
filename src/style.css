@@ -16,12 +16,12 @@
   background-color: rgb(222, 222, 222);
 }
 .form-container input {
-  width: 55%;
-  height: 30px;
+  width: 50%;
+  height: 25px;
   margin: 10px 0px 10px 0px;
 }
 .form-container textarea {
-  width: 55%;
+  width: 50%;
   margin-top: 10px;
   height: 80px;
 }
@@ -30,4 +30,9 @@
   padding: 0;
   margin: 0;
   letter-spacing: 1px;
+  font-size: 0.8rem;
+}
+#submit {
+  height: 35px;
+  margin-top: 30px;
 }

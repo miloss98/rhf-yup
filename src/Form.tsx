@@ -5,20 +5,31 @@ import "./style.css";
 
 const Form = () => {
   const schema = yup.object().shape({
-    firstName: yup.string().min(3).max(32).required("Name is required!"),
-    email: yup.string().email().required("Email is required!"),
+    firstName: yup
+      .string()
+      .min(3, "Name must be at least 3 letters long.")
+      .max(32)
+      .required("Name is required!"),
+    email: yup
+      .string()
+      .email("Email must have a valid email pattern.")
+      .required("Email is required!"),
     age: yup
       .number()
-      .typeError("Age field must be a number!")
+      .typeError("Age must be a number!")
       .positive()
       .integer()
-      .min(18)
+      .min(18, "Age must be 18 or over!")
       .required("Age is required!"),
-    password: yup.string().min(4).max(24).required("Password is required!"),
+    password: yup
+      .string()
+      .min(4, "Password must be at least 4 characters long.")
+      .max(24, "Password is too long!")
+      .required("Password is required!"),
     confirmPassword: yup
       .string()
       .oneOf([yup.ref("password"), null], "Passwords don't match!")
-      .required("This field is required!"),
+      .required("Confirm password is required!"),
   });
 
   const {
@@ -67,7 +78,7 @@ const Form = () => {
           placeholder="Description (optional)"
           {...register("description")}
         />
-        <input type="submit" />
+        <input id="submit" type="submit" />
       </form>
     </>
   );
